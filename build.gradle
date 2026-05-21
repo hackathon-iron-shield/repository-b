@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // Shared Vulnerability
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7.1'
     
     // Unique Vulnerability to Repo B
     implementation 'org.springframework:spring-web:5.3.15'
