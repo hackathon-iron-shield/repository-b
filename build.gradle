@@ -10,9 +10,23 @@ repositories {
 }
 
 dependencies {
-    // Shared Vulnerability (Log4Shell)
-    implementation 'org.apache.logging.log4j:log4j-core:2.14.1'
+    // Shared dependency with repository-a. Iron Shield demo target:
+    // when the user clicks "Triage & Fix" on the commons-text dependency
+    // group, this finding flags FALSE_POSITIVE (current 1.15.0 IS the
+    // latest stable 1.x, and CVE-2022-42889's range only covers up to
+    // 1.9). Repo-a's same-group finding flags FIX in the same click —
+    // one PR raised against repo-a, no PR against this repo.
+    implementation 'org.apache.commons:commons-text:1.15.0'
 
-    // Unique to Repo B (scanner false positive — CVE-2014-3578 does not cover 5.3.15)
-    implementation 'org.springframework:spring-web:5.3.15'
+    // NEEDS_REVIEW. Struts 2.5.33 is the last patch of the 2.5.x line
+    // (EOL), and CVE-2024-53677 covers all of 2.0.x-2.5.x. The fix only
+    // lands in Struts 6.4.0+ — a major upgrade that needs human review,
+    // not an auto-PR.
+    implementation 'org.apache.struts:struts2-core:2.5.33'
+
+    // UNCERTAIN. The scanner cites CVE-2099-99999, which is fake — NVD,
+    // OSV, and GitHub Advisory all return nothing. Per the failure-
+    // handling policy, the Triage agent escalates instead of guessing
+    // an affected range from memory.
+    implementation 'org.springframework:spring-web:6.1.4'
 }
